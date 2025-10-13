@@ -5,3 +5,5 @@ tqdm
 nltk
 ruff
 pre-commit
+datasets
+huggingface_hub

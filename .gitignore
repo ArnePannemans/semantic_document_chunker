@@ -16,6 +16,7 @@ data/v1/training_pairs/*
 !data/v1/labeled/.gitkeep
 data/dummy/*
 !data/v1/training_pairs/.gitkeep
+data/DATASET_CARD.md
 
 # Models
 models/*
