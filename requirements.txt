@@ -1,0 +1,7 @@
+jinja2
+google-genai
+python-dotenv
+tqdm
+nltk
+ruff
+pre-commit

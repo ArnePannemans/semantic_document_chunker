@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Data (ignore all data files, keep structure)
+data/v1/documents/*
+data/v1/labeled/*
+data/v1/training_pairs/*
+!data/v1/documents/.gitkeep
+!data/v1/labeled/.gitkeep
+data/dummy/*
+!data/v1/training_pairs/.gitkeep
+
+# Models
+models/*
+!models/.gitkeep
+
+# Environment
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Weights & Biases
+wandb/
+
+# Plan files
+*.plan.md
