@@ -15,7 +15,10 @@ def call_gemini(
     max_output_tokens,
     thinking_budget,
 ) -> str:
-    """Call to Gemini model with thread-safe client creation to allow for parallel processing"""  # noqa: E501
+    """
+    Call to Gemini model with thread-safe client creation to allow for
+    parallel processing
+    """
     client = genai.Client(
         api_key=os.environ.get("GEMINI_API_KEY"),
     )
