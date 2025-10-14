@@ -1,9 +1,5 @@
-#!/usr/bin/env python3
-"""
-Training script for semantic chunk prediction using Qwen3-14B
-"""
+"""Training script for semantic chunk prediction using Qwen3-14B."""
 
-import argparse
 import json
 import os
 import sys
@@ -17,7 +13,6 @@ if "cursor" in sys.executable.lower() or ".appimage" in sys.executable.lower():
     if python_path:
         sys.executable = python_path
 
-from datasets import Dataset
 from sklearn.model_selection import train_test_split
 from transformers import DataCollatorForSeq2Seq
 from trl import SFTConfig, SFTTrainer
@@ -26,7 +21,8 @@ from unsloth.chat_templates import train_on_responses_only
 
 import wandb
 from src.config import TrainingConfig
-from src.utils.training_utils import format_sample_as_chat_messages
+from src.core.prompts import render_prediction_prompts
+from src.training.dataset import create_training_dataset
 
 
 def load_training_data(input_dir: str) -> list[dict]:
@@ -73,7 +69,6 @@ def create_data_splits(samples: list[dict], config: TrainingConfig):
     )
 
     # Second split: separate validation from training
-    # Adjust val_ratio to be relative to train_val set
     val_ratio_adjusted = config.val_ratio / (1 - config.test_ratio)
     train_samples, val_samples = train_test_split(
         train_val_samples,
@@ -87,45 +82,7 @@ def create_data_splits(samples: list[dict], config: TrainingConfig):
     return train_samples, val_samples, test_samples
 
 
-def create_dataset(samples: list[dict], tokenizer) -> Dataset:
-    """
-    Create a HuggingFace Dataset from training samples.
-
-    Args:
-        samples: List of training samples
-        tokenizer: Model tokenizer
-
-    Returns:
-        Dataset ready for training
-    """
-    conversations = [
-        {
-            "conversations": format_sample_as_chat_messages(
-                input=sample["input"],
-                output=sample["output"],
-            )
-        }
-        for sample in samples
-    ]
-    dataset = Dataset.from_list(conversations)
-
-    def format_conversations(examples):
-        texts = []
-        for conv in examples["conversations"]:
-            # Apply Qwen3 chat template
-            formatted_text = tokenizer.apply_chat_template(
-                conv,
-                tokenize=False,
-                add_generation_prompt=False,
-                enable_thinking=False,
-            )
-            texts.append(formatted_text)
-        return {"text": texts}
-
-    return dataset.map(format_conversations, batched=True)
-
-
-def save_test_files(test_samples: list[dict], output_dir: Path, input_dir: str):
+def save_test_samples(test_samples: list[dict], output_dir: Path, input_dir: str):
     """
     Save test sample references for later evaluation.
 
@@ -147,16 +104,19 @@ def save_test_files(test_samples: list[dict], output_dir: Path, input_dir: str):
     print(f"Saved test sample references to {test_file_path}")
 
 
-def setup_wandb(output_dir: Path, config: TrainingConfig):
+def setup_wandb(config: TrainingConfig):
     """
     Initialize Weights & Biases logging.
 
     Args:
-        output_dir: Output directory for this run
         config: Training configuration
     """
     os.environ["WANDB_WATCH"] = "all"
     os.environ["WANDB_LOG_MODEL"] = "end"
+    system_prompt, user_prompt = render_prediction_prompts(
+        document="...document text...",
+        config=config.chunking,
+    )
 
     wandb.init(
         project=config.wandb_project,
@@ -177,13 +137,15 @@ def setup_wandb(output_dir: Path, config: TrainingConfig):
             "lr_scheduler_type": config.lr_scheduler_type,
             "optimizer": config.optimizer,
             "seed": config.seed,
-            "target_chunk_size": config.target_chunk_size,
-            "acceptable_range": config.acceptable_range,
+            "target_chunk_size": config.chunking.target_chunk_size,
+            "acceptable_range": config.chunking.acceptable_range,
+            "system_prompt": system_prompt,
+            "user_prompt": user_prompt,
         },
     )
 
 
-def train(input_dir: str, output_dir: str):
+def train_model(input_dir: str, output_dir: str):
     """
     Main training function.
 
@@ -193,6 +155,7 @@ def train(input_dir: str, output_dir: str):
     """
     print("=== Starting Training ===")
 
+    # Initialize configuration
     config = TrainingConfig()
 
     output_path = Path(output_dir)
@@ -203,8 +166,9 @@ def train(input_dir: str, output_dir: str):
     train_samples, val_samples, test_samples = create_data_splits(samples, config)
 
     # Save test samples for later evaluation
-    save_test_files(test_samples, output_path, input_dir)
+    save_test_samples(test_samples, output_path, input_dir)
 
+    # Load model and tokenizer
     print(f"Loading model: {config.base_model}")
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=config.base_model,
@@ -212,6 +176,7 @@ def train(input_dir: str, output_dir: str):
         load_in_4bit=config.load_in_4bit,
     )
 
+    # Apply LoRA
     print("Applying LoRA adapter")
     model = FastLanguageModel.get_peft_model(
         model,
@@ -226,11 +191,12 @@ def train(input_dir: str, output_dir: str):
 
     # Create datasets
     print("Creating datasets")
-    train_dataset = create_dataset(train_samples, tokenizer)
-    val_dataset = create_dataset(val_samples, tokenizer)
+    train_dataset = create_training_dataset(train_samples, tokenizer, config)
+    val_dataset = create_training_dataset(val_samples, tokenizer, config)
 
     # Initialize WandB
-    setup_wandb(output_path, config)
+    print("Initializing WandB")
+    setup_wandb(config)
 
     # Create trainer
     print("Setting up trainer")
@@ -270,7 +236,7 @@ def train(input_dir: str, output_dir: str):
         ),
     )
 
-    # Configure trainer to train on responses only
+    # Configure trainer to calculate loss on responses only
     print("Configuring response-only training")
     trainer = train_on_responses_only(
         trainer,
@@ -291,30 +257,3 @@ def train(input_dir: str, output_dir: str):
     # Clean up WandB
     wandb.finish()
     print("=== Training Finished Successfully ===")
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Train semantic chunking model on training pairs")
-    parser.add_argument(
-        "--input",
-        type=str,
-        required=True,
-        help="Input directory with training pair JSON files",
-    )
-    parser.add_argument(
-        "--output",
-        type=str,
-        required=True,
-        help="Output directory for trained model",
-    )
-
-    args = parser.parse_args()
-
-    print(f"Training on data from: {args.input}")
-    print(f"Saving model to: {args.output}")
-
-    train(args.input, args.output)
-
-
-if __name__ == "__main__":
-    main()
