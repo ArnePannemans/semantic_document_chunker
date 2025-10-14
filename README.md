@@ -21,7 +21,9 @@ pre-commit install
 
 ## Usage
 
-### 1. Insert Split Markers
+### Data Pipeline
+
+#### 1. Insert Split Markers
 
 Use Gemini to identify semantic boundaries in documents:
 
@@ -31,7 +33,7 @@ python -m src.scripts.insert_split_markers \
     --output data/dummy/labeled
 ```
 
-### 2. Prepare Training Pairs
+#### 2. Prepare Training Pairs
 
 Convert labeled documents into training pairs with location tags:
 
@@ -39,6 +41,40 @@ Convert labeled documents into training pairs with location tags:
 python -m src.scripts.prepare_training_pairs \
     --input data/dummy/labeled \
     --output data/dummy/training_pairs
+```
+
+### Training
+
+Train the Qwen3-14B model with LoRA:
+
+```bash
+python -m src.scripts.train \
+    --input data/dummy/training_pairs \
+    --output models/qwen3-run-01
+```
+
+Configuration is managed in `src/config.py` (`TrainingConfig` class). The training script:
+- Automatically splits data into train/val/test sets (90/10/10)
+- Logs metrics to Weights & Biases
+- Saves checkpoints and final model
+- Stores test samples for evaluation
+
+### Inference
+
+Test the model before or after training:
+
+```bash
+# Test base model (untrained)
+python -m src.scripts.inference --sample data/dummy/training_pairs/dummy_doc.json
+
+# Test trained model with LoRA
+python -m src.scripts.inference \
+    --sample data/dummy/training_pairs/dummy_doc.json \
+    --model models/qwen3-run-01/final_model
+
+# Test on custom text
+python -m src.scripts.inference \
+    --text "<|loc_0|>First sentence.<|loc_1|>Second sentence."
 ```
 
 ## Example
