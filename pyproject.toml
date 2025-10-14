@@ -1,6 +1,6 @@
 [tool.ruff]
 # Set the maximum line length to 88 (Black's default)
-line-length = 88
+line-length = 100
 
 # Assume Python 3.11
 target-version = "py311"

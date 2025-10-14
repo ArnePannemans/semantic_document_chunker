@@ -16,6 +16,7 @@ data/v1/training_pairs/*
 !data/v1/labeled/.gitkeep
 data/dummy/*
 !data/v1/training_pairs/.gitkeep
+relevant_papers/*
 
 # Models
 models/*
@@ -39,3 +40,6 @@ wandb/
 
 # Plan files
 *.plan.md
+
+# Unsloth
+unsloth_compiled_cache/

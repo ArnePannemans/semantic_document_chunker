@@ -9,13 +9,13 @@ Raw input documents (`.txt` files) before processing.
 
 ## 2. `labeled/`
 Documents with `<SPLIT>` markers inserted at semantic boundaries by LLM.
-- Output from `insert_split_markers` script
+- Output from `python -m src.data generate_labels`
 - Same filename as source document
 
 ## 3. `training_pairs/`
 Training data generated from labeled documents.
-- Output from `prepare_training_data` script
-- Format: `.json` files
+- Output from `python -m src.data prepare_training_pairs`
+- Format: `.json` files with 'input' and 'output' keys
 
 
 ## Versions
