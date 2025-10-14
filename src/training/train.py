@@ -13,11 +13,13 @@ if "cursor" in sys.executable.lower() or ".appimage" in sys.executable.lower():
     if python_path:
         sys.executable = python_path
 
+# important to import Unsloth before transformers
+from unsloth import FastLanguageModel, is_bfloat16_supported  # isort: skip
+from unsloth.chat_templates import train_on_responses_only  # isort: skip
+
 from sklearn.model_selection import train_test_split
 from transformers import DataCollatorForSeq2Seq
 from trl import SFTConfig, SFTTrainer
-from unsloth import FastLanguageModel, is_bfloat16_supported
-from unsloth.chat_templates import train_on_responses_only
 
 import wandb
 from src.config import TrainingConfig
