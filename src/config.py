@@ -40,8 +40,8 @@ class TrainingConfig:
     chunking: ChunkingConfig = field(default_factory=ChunkingConfig)
 
     # Model
-    base_model: str = "unsloth/Qwen3-14B"
-    load_in_4bit: bool = True
+    base_model: str = "unsloth/Qwen3-4B-Instruct-2507"
+    load_in_4bit: bool = False  # Running natively without quantization
     max_seq_len: int = 8000
 
     # LoRA
@@ -85,8 +85,8 @@ class TrainingConfig:
 
     # WandB
     wandb_project: str = "Semantic chunking"
-    wandb_group: str = "Qwen3-14B"
-    wandb_run_name: str = field(default_factory=lambda: f"qwen3-14b-{datetime.now():%H%M%S}")
+    wandb_group: str = "Qwen3-4B-Instruct"
+    wandb_run_name: str = field(default_factory=lambda: f"qwen3-4b-{datetime.now():%H%M%S}")
 
 
 @dataclass
@@ -96,10 +96,10 @@ class InferenceConfig:
     chunking: ChunkingConfig = field(default_factory=ChunkingConfig)
 
     # Model settings
-    base_model: str = "unsloth/Qwen3-14B"
-    adapter_path: str | None = "models/qwen3-14-recreation-run-v1/checkpoint-133"
+    base_model: str = "unsloth/Qwen3-4B-Instruct-2507"
+    adapter_path: str | None = "models/qwen3-4b-run/checkpoint-91"
     max_seq_len: int = 8000
-    load_in_4bit: bool = True
+    load_in_4bit: bool = False
 
     # Generation settings
     temperature: float = 0.05
@@ -112,7 +112,7 @@ class APIConfig:
 
     host: str = "0.0.0.0"
     port: int = 8000
-    reload: bool = False
+    reload: bool = True  # Auto-reload on file changes
     log_level: str = "info"
 
     cors_origins: list[str] = field(default_factory=lambda: ["*"])

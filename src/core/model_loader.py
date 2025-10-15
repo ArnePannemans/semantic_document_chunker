@@ -2,6 +2,7 @@
 
 from peft import PeftModel
 from unsloth import FastLanguageModel
+from unsloth.chat_templates import get_chat_template
 
 from src.config import InferenceConfig
 
@@ -30,6 +31,14 @@ def load_model(
         model_name=config.base_model,
         max_seq_length=config.max_seq_len,
         load_in_4bit=config.load_in_4bit,
+    )
+
+    # Configure chat template for Qwen3-Instruct (CRITICAL!)
+    # Use the official qwen3-instruct template (without <think> tags for non-reasoning)
+    print("Configuring qwen3-instruct chat template")
+    tokenizer = get_chat_template(
+        tokenizer,
+        chat_template="qwen3-instruct",  # Official template from Unsloth
     )
 
     # If adapter_path provided, load the LoRA adapter on top
