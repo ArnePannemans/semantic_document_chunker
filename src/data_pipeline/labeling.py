@@ -8,7 +8,7 @@ from tqdm import tqdm
 from src.config import DataPipelineConfig
 from src.core.chunking import get_chunk_bounds, validate_document
 from src.core.prompts import render_labeling_prompts
-from src.utils.gemini import call_gemini
+from src.data_pipeline.utils.gemini import call_gemini
 
 
 class DocumentLabelingError(Exception):

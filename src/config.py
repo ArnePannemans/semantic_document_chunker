@@ -41,8 +41,8 @@ class TrainingConfig:
 
     # Model
     base_model: str = "unsloth/Qwen3-14B"
-    max_seq_len: int = 8000
     load_in_4bit: bool = True
+    max_seq_len: int = 8000
 
     # LoRA
     lora_r: int = 16
@@ -91,14 +91,29 @@ class TrainingConfig:
 
 @dataclass
 class InferenceConfig:
-    """Configuration for inference/prediction."""
+    """Configuration for model inference (used by both API and CLI)."""
 
     chunking: ChunkingConfig = field(default_factory=ChunkingConfig)
 
+    # Model settings
     base_model: str = "unsloth/Qwen3-14B"
+    adapter_path: str | None = "models/qwen3-14-recreation-run-v1/checkpoint-133"
     max_seq_len: int = 8000
     load_in_4bit: bool = True
 
-    # Generation defaults
+    # Generation settings
     temperature: float = 0.05
     max_new_tokens: int = 256
+
+
+@dataclass
+class APIConfig:
+    """Configuration for API server."""
+
+    host: str = "0.0.0.0"
+    port: int = 8000
+    reload: bool = False
+    log_level: str = "info"
+
+    cors_origins: list[str] = field(default_factory=lambda: ["*"])
+    inference: InferenceConfig = field(default_factory=InferenceConfig)

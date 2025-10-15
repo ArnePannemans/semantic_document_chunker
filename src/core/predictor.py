@@ -4,8 +4,8 @@ import re
 
 from src.config import InferenceConfig
 from src.core.chunking import split_into_sentences, tag_sentences
+from src.core.model_loader import load_model
 from src.core.prompts import format_as_chat_messages, render_prediction_prompts
-from src.inference.model_loader import load_model
 
 
 class SemanticChunker:
@@ -145,7 +145,7 @@ class SemanticChunker:
         Returns:
             List of semantic chunks
         """
-        # Split into sentences (same logic as training data preparation)
+        # Split text into sentences
         sentences = split_into_sentences(
             text,
             min_words=self.config.chunking.min_words_per_sentence,

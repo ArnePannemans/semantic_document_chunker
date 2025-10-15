@@ -30,7 +30,7 @@ pre-commit install
 Use Gemini to identify semantic boundaries in documents:
 
 ```bash
-python -m src.data generate_labels \
+python -m src.data_pipeline generate_labels \
     --input data/dummy/documents \
     --output data/dummy/labeled
 ```
@@ -42,7 +42,7 @@ Configuration is managed via `DataPipelineConfig` in `src/config.py`.
 Convert labeled documents into training pairs with location tags:
 
 ```bash
-python -m src.data prepare_training_pairs \
+python -m src.data_pipeline prepare_training_pairs \
     --input data/dummy/labeled \
     --output data/dummy/training_pairs
 ```
@@ -63,60 +63,50 @@ Configuration is managed via `TrainingConfig` in `src/config.py`. The training s
 - Saves checkpoints and final model
 - Stores test samples for evaluation
 
-### Inference
+### API Server
 
-Two modes for testing and demonstration:
-
-#### Mode 1: Test with Sample (Ground Truth)
-
-Compare model predictions against labeled data:
+Start the FastAPI server to serve the semantic chunking model:
 
 ```bash
-# Test base model
-python -m src.inference \
-    --sample data/dummy/training_pairs/dummy_doc.json
-
-# Test with LoRA adapter
-python -m src.inference \
-    --sample data/dummy/training_pairs/dummy_doc.json \
-    --adapter models/qwen3-run-01/checkpoint-140
+./scripts/start_server.sh
 ```
 
-#### Mode 2: Chunk Raw Text
+The server will be available at `http://localhost:8000` with interactive docs at `http://localhost:8000/docs`.
 
-Chunk any document for demos or production use:
+#### Endpoints
 
+- `GET /health` - Health check and model status
+- `POST /v1/chunk` - Chunk a document into semantic sections
+
+#### Example Usage
+
+Using curl:
 ```bash
-# Test base model
-python -m src.inference \
-    --text "Your document text here..."
-
-# Test with LoRA adapter
-python -m src.inference \
-    --text "Your document text here..." \
-    --adapter models/qwen3-run-01/checkpoint-140
+curl -X POST "http://localhost:8000/v1/chunk" \
+  -H "Content-Type: application/json" \
+  -d '{"document": "Your document text here..."}'
 ```
 
-
-Configuration (temperature, max tokens, etc.) is managed via `InferenceConfig` in `src/config.py`.
-
-### Python API
-
-Use the chunker programmatically in your application:
-
+Using Python:
 ```python
-from src.inference import SemanticChunker
+import requests
 
-# Initialize chunker
-chunker = SemanticChunker(adapter_path="models/qwen3-run-01/checkpoint-140")
-
-# Chunk a document
-text = "Your document text here..."
-chunks = chunker.chunk_document(text)
-
-for i, chunk in enumerate(chunks):
-    print(f"Chunk {i+1}: {chunk}")
+response = requests.post(
+    "http://localhost:8000/v1/chunk",
+    json={"document": "Your document text here..."}
+)
+result = response.json()
+print(f"Created {result['num_chunks']} chunks")
+for i, chunk in enumerate(result['chunks'], 1):
+    print(f"Chunk {i}: {chunk}")
 ```
+
+Test the API:
+```bash
+python scripts/test_api.py
+```
+
+
 
 ## Example Workflow
 

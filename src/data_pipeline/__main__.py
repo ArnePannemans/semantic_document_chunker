@@ -3,8 +3,8 @@
 import argparse
 import sys
 
-from src.data.labeling import generate_labels
-from src.data.prepare_training_data import create_training_pairs
+from src.data_pipeline.labeling import generate_labels
+from src.data_pipeline.prepare_training_data import create_training_pairs
 
 
 def main():
