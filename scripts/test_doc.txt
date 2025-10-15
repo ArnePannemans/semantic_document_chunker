@@ -1,1 +1,60 @@
-Machine learning has revolutionized the field of natural language processing over the past decade. The introduction of transformer architectures in 2017 marked a significant turning point in how we approach language understanding tasks. These models, based on attention mechanisms, have proven to be highly effective at capturing long-range dependencies in text. The original transformer paper, titled 'Attention Is All You Need,' proposed a novel architecture that dispensed with recurrence and convolution entirely. Instead, it relied solely on self-attention mechanisms to compute representations of input sequences. This approach allowed for much greater parallelization during training, leading to faster model development cycles and the ability to train on larger datasets. The key innovation was the multi-head attention mechanism, which allows the model to jointly attend to information from different representation subspaces at different positions. Following the success of transformers, several landmark models emerged that pushed the boundaries of what was possible with language AI. BERT, introduced by Google in 2018, demonstrated the power of bidirectional pre-training for language understanding. By training on a masked language modeling objective, BERT learned rich contextual representations that could be fine-tuned for a wide variety of downstream tasks. This pre-training and fine-tuning paradigm became the standard approach in NLP. Around the same time, OpenAI released GPT, which took a different approach by focusing on autoregressive language modeling. GPT was trained to predict the next token in a sequence, learning to generate coherent text in the process. Subsequent versions like GPT-2 and GPT-3 scaled up this approach dramatically, demonstrating that language models could exhibit impressive capabilities when trained on massive amounts of text data. The trend toward larger models has continued, with models now containing hundreds of billions of parameters. However, this scaling has raised important questions about efficiency, accessibility, and environmental impact. Training these massive models requires substantial computational resources and energy consumption. This has led to increased interest in more efficient architectures and training methods. Researchers are exploring techniques like model distillation, pruning, and quantization to make large language models more practical for deployment. Another active area of research is improving the sample efficiency of these models, reducing the amount of training data needed to achieve good performance. Despite these challenges, the impact of transformer-based language models on practical applications has been profound. They have enabled significant advances in machine translation, enabling more accurate and fluent translations across a wide variety of language pairs. In question answering systems, these models can now understand complex queries and retrieve relevant information from large knowledge bases. Summarization systems powered by transformers can generate concise summaries of long documents while preserving key information. The technology has also found applications beyond traditional NLP tasks. In code generation, models like GitHub Copilot assist developers by suggesting code completions and even entire functions. In scientific research, language models are being used to analyze literature, generate hypotheses, and assist in experimental design. The versatility of these models stems from their ability to learn general-purpose representations that can be adapted to many different tasks.
+From Wikipedia, the free encyclopedia
+Not to be confused with Gerund.
+In Latin grammar, a gerundive (/dʒəˈrʌndɪv/) is a verb form that functions as a verbal adjective.
+
+In Classical Latin, the gerundive has the same form as the gerund, but is distinct from the present active participle. In Late Latin, the differences were largely lost, resulting in a form derived from the gerund or gerundive but functioning more like a participle. The adjectival gerundive form survives in the formation of progressive aspect forms in Italian, Spanish and Brazilian Portuguese and some southern/insular dialects of European Portuguese. In French the adjectival gerundive and participle forms merged completely, and the term gérondif is used for adverbial use of -ant forms.[1]
+
+There is no true equivalent to the gerundive in English, but it can be interpreted as a future passive participle, used adjectivally or adverbially; the closest translation is a passive to-infinitive non-finite clause such as books to be read. That reflects the most common use of the Latin gerundive, to combine a transitive verb (such as read) and its object (such as books), usually with a sense of obligation. Another translation is the recent development of the must- prefix as in a must-read book.[2]
+
+Latin
+Further information: Latin syntax § The gerundive, and Latin tenses § Gerundive tenses
+Form
+The Latin gerundive is a form of the verb. It is composed of:
+
+the infectum stem (the stem used to form Present and Imperfect tense forms)
+a vowel appropriate to the verb class or conjugation of the verb
+the suffix -nd-
+an adjectival Inflectional ending
+For example:
+
+laud-	-a-	-nd-	-us, -a, -um	First conjugation	laudandus, -a, -um	'concerned with the act of praising'	homo laudandus est— 'the man is to be praised'
+tim-	-e-	-nd-	-us, -a, -um	Second conjugation	timendus, -a, -um	'concerned with the act of fearing'	mulier timenda est — 'the woman is to be feared'
+leg-	-e-	-nd-	-us, -a, -um	Third conjugation	legendus, -a, -um	'concerned with the act of reading'	volumen legendum est — 'the volume is to be read'
+capi-	-e-	-nd-	-us, -a, -um	Third conjugation	capiendus, -a, -um	'concerned with the act of taking'	castra capienda sunt — 'the camp is to be taken'
+audi-	-e-	-nd-	-us, -a, -um	Fourth conjugation	audiendus, -a, -um	'concerned with the act of hearing'	voces audiendae sunt — 'the voices are to be heard'
+Related gerund forms are composed in a similar way with nominal inflexional endings.
+
+Meaning and use
+In principle, the gerundive could express a wide range of meaning relationships: 'capable of', 'prone to', 'ripe for' (killing, dying, rising, rolling etc.). Some gerundives have much the same meaning as present participles: secundus 'following'; oriundus 'arising, descended from'; volvendus 'rolling'. Originally it could express active or passive meaning, and therefore could be used with verbs in intransitive as well as transitive use. However, the great majority of gerundive forms were used with passive meaning of transitive verbs.
+
+The gerundive could be used as either a predicative or an attributive adjective. However, attributive use was rare, largely confined to verbs expressing approval or disapproval. The predicative use invited a secondary meaning of obligation (a meaning not shared with the gerund). Thus:
+
+ATTRIBUTIVE	agnus caedundus	'a lamb ready for slaughtering'
+PREDICATIVE	agnus est caedundus	'The lamb is for slaughter', 'The lamb is to be slaughtered', 'The lamb must be slaughtered'
+This sense of obligation with passive meaning is by far the most common use of the gerundive.[3] Thus it has been equated with a future passive participle.
+
+A neuter form without a noun may function as an impersonal expression, for example: addendum 'something to be added'; referendum 'something to be referred back'. These are not gerund forms; the -um form of the gerund is used only after prepositions. The plural forms without nouns such as agenda 'things to be done' are also adjectival gerundives; the gerund has no plural form.
+
+For details of the formation and usage of the Latin gerundive, see Latin conjugation § Gerundive and Latin syntax § The gerundive.
+
+Gerundive expressions widely quoted or adopted in English
+Cato the Elder, a Roman senator, frequently ended his speeches with the statement Ceterum censeo Carthaginem delendam esse ("I also think Carthage to be [something] that must be destroyed", i.e. "Besides which, I think Carthage must be destroyed").
+nunc est bibendum (Horace, Odes, 1.37) "now it is necessary to drink!", in other words, it's time to celebrate.
+Mutatis mutandis, "changing [only] those things which need to be changed" or more simply "[only] the necessary changes having been made".
+A gerundive appears in the phrase quod erat demonstrandum ("which was to be demonstrated"), whose abbreviated form Q.E.D. is often used after the final conclusion of a proof.
+The motto Nil desperandum 'Nothing is to be despaired at' i.e. 'Never despair'. Based on this the cod Latin Nil illegitimis carborundum 'Don't let the bastards grind you down'.
+The name Amanda is the feminine gerundive of amare ("to love"), and thus means roughly "[she who is] to be loved", "worthy of being loved", "worthy of love", or simply "lovable". Similarly with the name Miranda; mirari means "to admire", so the name means "[she who is] to be admired", "worthy of admiration", or "admirable".
+A number of English words come from Latin gerundives. For example, addendum comes from the gerundive of addere ("to add"), and so means something that must be added; referendum comes from the gerundive of referre ("to bring back" [to the people]); agenda comes from the neuter plural of agendus, the gerundive of agere "to do", and so means things that must be done; reverend comes from the gerundive reverendus, and refers to a person who should be revered; propaganda comes from a Neo-Latin phrase containing a feminine form of propagandus, the gerundive of propagare ("to propagate"), so that propaganda was originally something that should be propagated; legend in Latin is legenda, which originally meant things you should read, (from legere "to read") but became a (fem. sing.) word in its own right in medieval times; a dividend is something to be divided [among shareholders].
+The expression de gustibus non est disputandum ("matters of taste should not be debated").
+Later developments
+In Late Latin, the distinction between gerundive and future participle was sometimes lost. So, gerundive moriendi is found for morituri 'about to die'. Conversely, future participles recepturus and scripturus are found for recipiendus and scribendus/scribundus. More regularly, the gerundive came to be used as a future passive participle. Ultimately the gerundive in the nominative case came to substitute for the present participle.[4]
+
+Other languages
+The term is occasionally used in descriptions of English grammar, to denote the present participle used adjectivally or adverbially e.g. 'take a running jump'. That form, ending in -ing, is identical to that of the English gerund, but it is generally called a gerund when it is used as a noun, not as an adjective or adverb e.g. 'running burns more calories than walking'.
+
+In Old Irish, a form known in the literature as the verbal of necessity is used as the predicate of the copula in the function of the Latin gerundive, e.g. inna hí atá adamraigthi "the things that are to be admired".[5][6]
+
+The term gerundive may be used in grammars and dictionaries of Pali, for example the Pali Text Society's Pali-English Dictionary of 1921–25.[7] It is referred to by some other writers as the participle of necessity, the potential participle or the future passive participle. It is used with the same meaning as the Latin gerundive.
+
+In the east African Semitic language Tigrinya, gerundive is used to denote a particular finite verb form, not a verbal adjective or adverb. Generally, it denotes completed action that is still relevant. A verb in the gerundive can be used alone or serially with another gerundive verb. In the latter case, it may sometimes be translated with an adverbial clause: bitri hidju kheydu (literally, "a-stick he-took-hold-of he-began-walking") means "while holding a stick, he is walking", i.e. "he is carrying a stick". See Tigrinya verbs.
+
