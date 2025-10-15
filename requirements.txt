@@ -13,3 +13,7 @@ transformers
 trl
 wandb
 datasets
+
+# Serving dependencies
+fastapi
+uvicorn[standard]
