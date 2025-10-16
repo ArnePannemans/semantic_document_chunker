@@ -2,16 +2,7 @@
 
 import json
 import os
-import sys
 from pathlib import Path
-
-# Fix for Cursor AppImage issue with wandb
-if "cursor" in sys.executable.lower() or ".appimage" in sys.executable.lower():
-    import shutil
-
-    python_path = shutil.which("python3") or shutil.which("python")
-    if python_path:
-        sys.executable = python_path
 
 # important to import Unsloth before transformers
 from unsloth import FastLanguageModel, is_bfloat16_supported  # isort: skip

@@ -4,15 +4,6 @@ Simple FastAPI server for serving the semantic chunking model.
 This is a straightforward single-request API for testing and UI integration.
 """
 
-import shutil
-import sys
-
-# Fix for Cursor AppImage issue
-if "cursor" in sys.executable.lower() or ".appimage" in sys.executable.lower():
-    python_path = shutil.which("python3") or shutil.which("python")
-    if python_path:
-        sys.executable = python_path
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
