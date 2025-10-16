@@ -1,0 +1,20 @@
+jinja2
+google-genai
+python-dotenv
+tqdm
+nltk
+ruff
+pre-commit
+
+# Training dependencies
+scikit-learn
+unsloth
+transformers
+trl
+wandb
+datasets
+
+# Serving dependencies
+fastapi
+uvicorn[standard]
+vllm
