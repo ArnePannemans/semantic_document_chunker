@@ -97,7 +97,7 @@ class InferenceConfig:
 
     # Model settings
     base_model: str = "unsloth/Qwen3-14B"
-    adapter_path: str | None = "models/qwen3-14-recreation-run-v1/checkpoint-133"
+    adapter_path: str | None = "models/qwen3-14b-4bit-run-90-10-0/final_model"
     max_seq_len: int = 8000
     load_in_4bit: bool = True
 

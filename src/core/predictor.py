@@ -1,11 +1,15 @@
 """Core prediction logic for semantic chunking."""
 
 import re
+import logging
 
 from src.config import InferenceConfig
 from src.core.chunking import split_into_sentences, tag_sentences
 from src.core.model_loader import load_model
 from src.core.prompts import format_as_chat_messages, render_prediction_prompts
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class SemanticChunker:
@@ -158,6 +162,7 @@ class SemanticChunker:
 
         # Predict split indices
         output = self.predict_split_locations(tagged_text)
+        logger.info(f"Output: {output}")
         indices = self.parse_indices(output)
 
         # Split into chunks
