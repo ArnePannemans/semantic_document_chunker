@@ -17,6 +17,12 @@ data/v1/training_pairs/*
 data/dummy/*
 !data/v1/training_pairs/.gitkeep
 relevant_papers/*
+data/v2/documents/*
+data/v2/labeled/*
+data/v2/training_pairs/*
+!data/v2/documents/.gitkeep
+!data/v2/labeled/.gitkeep
+!data/v2/training_pairs/.gitkeep
 
 # Models
 models/*
